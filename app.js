@@ -61,14 +61,7 @@ app.get('/', async (req, res) => {
 app.get(['/COMP4537/labs/4/writeFile','/COMP4537/labs/4/writeFile/*?'],
   async (req, res) => {
     let text = req.query.text;
-    const file = req.params[0];
-    if (!file) {
-      res.setHeader('Content-Type', 'text/html')
-      res.status(404).send("<h3>This path should be followed by a file name.\n" + 
-        "Try <a href=\"/COMP4537/labs/4/writeFile/file.txt\">" +
-        "/COMP4537/labs/4/writeFile/file.txt</a>");
-        return;
-    }
+    const file = req.params[0] || 'file.txt';
     if (!text) {
       res.status(400).send("<h3>You need to add the 'text' query to the URL.\n" +
       "Example: '/writeFile?text=Hello'</h3>");
@@ -84,7 +77,7 @@ app.get(['/COMP4537/labs/4/writeFile','/COMP4537/labs/4/writeFile/*?'],
       res.status(404).send(`${err}\nCould not write to file: ${file}`);
       return;
     }
-    res.status(200).send(`Text Written: "${text}"`);
+    res.status(200).send(`Text Written to ${file}: "${text}"`);
   }
 );
 
