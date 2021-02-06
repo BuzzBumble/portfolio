@@ -1,4 +1,5 @@
 var path = require('path');
+let morgan = require('morgan');
 var express = require('express');
 let fs = require('fs');
 const app = express();
@@ -30,6 +31,7 @@ if (app.get('env') == 'development') {
     port : process.env.LIVERELOAD_PORT || 35729,
   }));
 }
+app.use(morgan('dev'));
 
 const mediumURL = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@s.kang919'
 
