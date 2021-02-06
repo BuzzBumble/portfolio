@@ -57,35 +57,61 @@ app.get('/', async (req, res) => {
     });
 });
 
-app.get('/COMP4537/labs/4/writeFile/:file', async (req, res) => {
-   const text = req.query.text + '\n';
-   const file = req.params.file;
-   try {
-     fs.writeFileSync(file, text, {encoding: 'utf8', flag: 'a+'});
-   } catch (err) {
-    if (err.code == 'ENOENT') {
-      res.status(404).send (`${err}\n File ${file} not found.`);
+//app.disable("X-Powered-By");
+app.get(['/COMP4537/labs/4/writeFile','/COMP4537/labs/4/writeFile/*?'],
+  async (req, res) => {
+    let text = req.query.text;
+    const file = req.params[0];
+    if (!file) {
+      res.setHeader('Content-Type', 'text/html')
+      res.status(404).send("<h3>This path should be followed by a file name.\n" + 
+        "Try <a href=\"/COMP4537/labs/4/writeFile/file.txt\">" +
+        "/COMP4537/labs/4/writeFile/file.txt</a>");
+        return;
     }
-     res.status(404).send(`${err}\nCould not write to file: ${file}`);
-     return;
-   }
-   res.status(200).send("Success");
-});
-
-app.get('/COMP4537/labs/4/readFile/:file', async (req, res) => {
-  const file = req.params.file;
-  let text;
-  try {
-    text = fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
-  } catch (err) {
-    if (err.code == 'ENOENT') {
-      res.status(404).send (`${err}\n File ${file} not found.`);
+    if (!text) {
+      res.status(400).send("<h3>You need to add the 'text' query to the URL.\n" +
+      "Example: '/writeFile?text=Hello'</h3>");
+      return;
     }
-    res.status(404).send(`${err}\n File ${file} could not be read.`);
-    return;
+    try {
+      fs.writeFileSync(file, text, {encoding: 'utf8', flag: 'a+'});
+    } catch (err) {
+      if (err.code == 'ENOENT') {
+        res.status(404).send (`${err}\n File ${file} not found.`);
+        return;
+      }
+      res.status(404).send(`${err}\nCould not write to file: ${file}`);
+      return;
+    }
+    res.status(200).send(`Text Written: "${text}"`);
   }
-  res.status(200).send(text);
-});
+);
+
+app.get(['/COMP4537/labs/4/readFile', '/COMP4537/labs/4/readFile/*?'],
+  async (req, res) => {
+    const file = req.params[0];
+    if (!file) {
+      res.setHeader('Content-Type', 'text/html')
+      res.status(404).send("<h3>This path should be followed by a file name.\n" + 
+        "Try <a href=\"/COMP4537/labs/4/readFile/file.txt\">" +
+        "/COMP4537/labs/4/readFile/file.txt</a>");
+      return;
+    }
+    let text;
+    try {
+      text = fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
+    } catch (err) {
+      if (err.code == 'ENOENT') {
+        res.status(404).send (`${err}\n File ${file} not found.`);
+        return;
+      }
+      res.status(404).send(`${err}\n File ${file} could not be read.`);
+      return;
+    }
+    res.status(200).send(text);
+  }
+);
 
 
 app.listen(process.env.PORT || 8000, (err) => {
