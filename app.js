@@ -75,7 +75,7 @@ app.get(['/COMP4537/labs/4/writeFile','/COMP4537/labs/4/writeFile/*?'],
       return;
     }
     try {
-      fs.writeFileSync(file, text, {encoding: 'utf8', flag: 'a+'});
+      fs.writeFileSync(file, text + '\n', {encoding: 'utf8', flag: 'a+'});
     } catch (err) {
       if (err.code == 'ENOENT') {
         res.status(404).send (`${err}\n File ${file} not found.`);
@@ -101,6 +101,8 @@ app.get(['/COMP4537/labs/4/readFile', '/COMP4537/labs/4/readFile/*?'],
     let text;
     try {
       text = fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
+      text = text.split('\n');
+      text = text.join('<br/>');
     } catch (err) {
       if (err.code == 'ENOENT') {
         res.status(404).send (`${err}\n File ${file} not found.`);
@@ -109,6 +111,7 @@ app.get(['/COMP4537/labs/4/readFile', '/COMP4537/labs/4/readFile/*?'],
       res.status(404).send(`${err}\n File ${file} could not be read.`);
       return;
     }
+    res.setHeader('Content-Type', 'text/html');
     res.status(200).send(text);
   }
 );
