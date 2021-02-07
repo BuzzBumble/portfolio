@@ -4,8 +4,6 @@
 @use 'components';
 @use 'media';
 @use 'images';
-@use 'desktop/desktop' as desktop;
-
 
 html, body {
   padding: 0;
@@ -17,74 +15,13 @@ html, body {
 }
 
 #main-container {
-  display: grid;
-}
-
-#banner {
-  height: 600px;
   width: 100%;
-  position: relative;
-}
-
-#parallax-container {
-  box-sizing: border-box;
-  overflow: hidden;
   height: 100%;
-  width: 100%;
-  border: inset 10px black;
-  position: absolute;
-
-  #scene {
-    z-index: -1;
-    @include components.parallax-scene;
-  }
+  display: grid;
 }
 
-#banner-title {
-  font-size: fonts.$font_size_header;
-  pointer-events: none;
-  margin: auto 0;
-  width: 40%;
-  height: 80%;
-
-  display: grid;
-  grid-template-columns: [hero-col-start] 14em auto;
-
-  grid-template-rows: 2fr [hero-row-start] 1fr 4fr;
-
-  #index-hero {
-    @include fonts.f_04b03;
-
-    grid-row-start: hero-row-start;
-    grid-column-start: hero-col-start;
-    justify-self: start;
-
-    display: grid;
-    grid-template-rows: 2fr 1fr;
-
-    #hero-header {
-
-      .header-title {
-        font-size: 1em;
-        color: aqua;
-        @supports (-webkit-text-stroke: 1px black) {
-          -webkit-text-fill-color: aquamarine;
-          -webkit-text-stroke-width: 0.05em;
-          -webkit-text-stroke-color: #c368c9;
-        }
-      }
-
-      .header-subtitle {
-        margin-bottom: 0;
-        margin-top: 12px;
-        font-size: 0.65em;
-        color: #ff0098;
-        @supports (-webkit-text-stroke: 1px black) {
-          -webkit-text-fill-color: #ff0098;
-          -webkit-text-stroke-width: 0.03em;
-          -webkit-text-stroke-color: aqua;
-        }
-      }
-    }
+@include media.for-mobile {
+  #main-container {
+    padding: 0;
   }
 }
