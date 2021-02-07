@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "node-dev app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "npx sass --watch public/styles/themes/pixel/:public/styles/css/"
+    "sass": "npx sass --watch public/styles/themes/:public/styles/css/"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "bulma": "^0.7.5",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "morgan": "^1.10.0",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {

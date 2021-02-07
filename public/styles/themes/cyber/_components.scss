@@ -1,0 +1,5 @@
+@use 'parallax-scene' as parallax;
+
+@mixin parallax-scene {
+    @include parallax.scene;
+}

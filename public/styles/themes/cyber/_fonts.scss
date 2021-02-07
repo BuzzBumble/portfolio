@@ -4,6 +4,8 @@
 //  f_pressStart  - Press Start 2P
 //  f_04b03       - 04B_03
 
+$font_path: '../../fonts/';
+
 $family_pressStart: 'Press Start 2P';
 $family_04b03: '04B_03';
 
@@ -20,10 +22,10 @@ $font_size_header_mobile: 40px;
 
 @font-face {
   font-family: $family_pressStart;
-  src: url("../fonts/PressStart2P-Regular.ttf");
+  src: url($font_path + "PressStart2P-Regular.ttf");
 }
 
 @font-face {
   font-family: $family_04b03;
-  src: url("../fonts/f_04B03.woff");
+  src: url($font_path + "f_04B03.woff");
 }

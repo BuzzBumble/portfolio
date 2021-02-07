@@ -1,8 +1,11 @@
 var path = require('path');
 var express = require('express');
+let morgan = require('morgan');
 const app = express();
 const axios = require('axios');
 const favicon = require('serve-favicon');
+
+app.use(morgan('dev'));
 
 if (app.get('env') == 'development') {
   console.log("asdf");
@@ -15,8 +18,12 @@ if (app.get('env') == 'development') {
   var file_type_regex = new RegExp('\\.(' + Object.keys(file_type_map).join('|') + ')$');
   app.use(livereload({     
     watchDirs: [
-      path.join(__dirname, 'public/styles/css'),
-      path.join(__dirname, 'views/pixel'),
+      path.join(__dirname, 'public/styles/css/cyber'),
+      path.join(__dirname, 'public/styles/css/simple-dark'),
+      path.join(__dirname, 'views/cyber'),
+      path.join(__dirname, 'views/simple-dark'),
+      path.join(__dirname, 'public/js/cyber'),
+      path.join(__dirname, 'public/js/simple-dark'),
     ],
     checkFunc: function(file) {
       return file_type_regex.test(file);
@@ -34,10 +41,10 @@ const mediumURL = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.c
 
 const themes = {
   "simple-dark": 'simple-dark',
-  pixel: 'pixel',
+  cyber: 'cyber',
 };
 
-const default_theme = 'pixel';
+const default_theme = 'cyber';
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
