@@ -6,6 +6,10 @@
   font-family: "04B_03";
   src: url("../../fonts/f_04B03.woff");
 }
+@font-face {
+  font-family: "Saira Condensed";
+  src: url("../../fonts/SairaCondensed-Regular.ttf");
+}
 .container {
   padding: 16px;
   box-sizing: border-box;
@@ -35,10 +39,6 @@ ul.no-bullet, ol.nobullet {
   margin: auto;
 }
 
-.lit {
-  filter: brightness(1.5);
-}
-
 @keyframes colorpulse {
   0% {
     filter: brightness(1) saturate(1.2);
@@ -47,6 +47,12 @@ ul.no-bullet, ol.nobullet {
     filter: brightness(1.2) saturate(1.5);
   }
 }
+#parallax-toggle-btn {
+  pointer-events: auto;
+  position: absolute;
+  z-index: 5;
+}
+
 #scene {
   position: absolute;
   left: -10%;
@@ -70,7 +76,7 @@ ul.no-bullet, ol.nobullet {
 #scene #buildings-far {
   background: url("../../../images/warped_assets/background/buildings-bg.png") repeat-x;
   background-position: center bottom;
-  background-size: 50%;
+  background-size: 50% 70%;
 }
 #scene #buildings-near {
   background: url("../../../images/warped_assets/background/near-buildings-bg.png") repeat-x;
@@ -92,23 +98,17 @@ ul.no-bullet, ol.nobullet {
   }
 }
 #index-hero {
-  font-family: "04B_03";
+  font-family: "Saira Condensed";
+  grid-column-start: 2;
+  grid-row-start: hero-row-start;
 }
 #index-hero #hero-header {
-  grid-row-start: hero-row-start;
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
 }
 #index-hero #hero-header .header-title {
   font-size: 1em;
-  color: aqua;
-}
-@supports (-webkit-text-stroke: 1px black) {
-  #index-hero #hero-header .header-title {
-    -webkit-text-fill-color: aquamarine;
-    -webkit-text-stroke-width: 0.05em;
-    -webkit-text-stroke-color: #c368c9;
-  }
+  color: white;
 }
 #index-hero #hero-header .header-subtitle {
   font-size: 0.75em;
@@ -119,17 +119,17 @@ ul.no-bullet, ol.nobullet {
   position: relative;
 }
 #banner #banner-title {
+  position: relative;
   font-size: 24px;
   pointer-events: none;
   margin: auto 0;
   width: 100%;
-  height: 80%;
+  height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr [hero-row-start] 1fr 1fr;
 }
 #banner #parallax-container {
-  z-index: -1;
   box-sizing: border-box;
   overflow: hidden;
   height: 100%;
@@ -141,9 +141,6 @@ ul.no-bullet, ol.nobullet {
 @media all and (max-width: 479px) {
   #banner {
     overflow: hidden;
-  }
-  #banner #banner-title {
-    justify-items: end;
   }
   #banner #banner-title #hero-header {
     font-size: 32px;
@@ -159,10 +156,17 @@ html, body {
   height: 100%;
   overflow: hidden;
   position: relative;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#carousel-container {
+  width: 300%;
+  height: 100%;
 }
 
 #main-container {
-  width: 100%;
+  width: 33.334%;
   height: 100%;
   display: grid;
 }

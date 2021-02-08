@@ -7,13 +7,16 @@
     <title>skang.tech</title>
   </head>
   <body>
-    <div id="main-container" class="container">
-      <div id="banner">
-        <div id="parallax-container">
-          <%-  include('_parallax-scene')  %>
-        </div>
-        <div id="banner-title">
-          <%- include('_hero-header') %>
+    <div id="carousel-container">
+      <div id="main-container" class="container">
+        <div id="banner">
+          <button id="parallax-toggle-btn">Parallax Off</button>
+          <div id="parallax-container">
+            <%-  include('_parallax-scene')  %>
+          </div>
+          <div id="banner-title">
+            <%- include('_hero-header') %>
+          </div>
         </div>
       </div>
     </div>

@@ -19,4 +19,19 @@ $(document).ready(() => {
   parallaxContainer.mouseleave(() => {
     parallax.disable();
   });
+
+  let parallaxBtn = $('#parallax-toggle-btn');
+  let parallaxEnabled = true;
+  parallaxBtn.click(() => {
+    console.log("Clicked button");
+    if (parallaxEnabled) {
+      parallaxEnabled = false;
+      parallax.disable();
+      parallaxBtn.html("Parallax On");
+    }  else {
+      parallaxEnabled = true;
+      parallax.enable();
+      parallaxBtn.html("Parallax Off");
+    }
+  });
 });

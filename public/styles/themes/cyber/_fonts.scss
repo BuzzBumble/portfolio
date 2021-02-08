@@ -8,6 +8,7 @@ $font_path: '../../fonts/';
 
 $family_pressStart: 'Press Start 2P';
 $family_04b03: '04B_03';
+$family_saira_condensed: 'Saira Condensed';
 
 $font_size_header: 64px;
 $font_size_header_mobile: 40px;
@@ -20,6 +21,10 @@ $font_size_header_mobile: 40px;
   font-family: $family_04b03;
 }
 
+@mixin f_saira_condensed {
+  font-family: $family_saira_condensed;
+}
+
 @font-face {
   font-family: $family_pressStart;
   src: url($font_path + "PressStart2P-Regular.ttf");
@@ -28,4 +33,9 @@ $font_size_header_mobile: 40px;
 @font-face {
   font-family: $family_04b03;
   src: url($font_path + "f_04B03.woff");
+}
+
+@font-face {
+  font-family: $family_saira_condensed;
+  src: url($font_path + "SairaCondensed-Regular.ttf");
 }

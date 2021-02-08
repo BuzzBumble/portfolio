@@ -12,10 +12,17 @@ html, body {
   height: 100%;
   overflow: hidden;
   position: relative;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#carousel-container {
+  width: 300%;
+  height: 100%;
 }
 
 #main-container {
-  width: 100%;
+  width: 33.334%;
   height: 100%;
   display: grid;
 }

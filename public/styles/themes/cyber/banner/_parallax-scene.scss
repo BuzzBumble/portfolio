@@ -21,7 +21,7 @@ $buildings-near: "#buildings-near";
   #{$buildings-far} {
     background: url(images.$bg_buildings_far) repeat-x;
     background-position: center bottom;
-    background-size: 50%;
+    background-size: 50% 70%;
   }
 }
 
@@ -31,6 +31,12 @@ $buildings-near: "#buildings-near";
     background-position: center 100%;
     background-size: 50% 60%;
   }
+}
+
+#parallax-toggle-btn {
+  pointer-events: auto;
+  position: absolute;
+  z-index: 5;
 }
 
 #scene {
