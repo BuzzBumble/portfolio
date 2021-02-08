@@ -55,13 +55,16 @@ $buildings-near: "#buildings-near";
 
 @include media.for-mobile {
   #scene {
+    #{$background} {
+      background-size: auto 100%;
+    }
     #{$buildings-far} {
       background-size: 90% 60%;
       background-position: center 60%;
     }
     #{$buildings-near} {
       background-size: 150% 60%;
-      background-position: center 80%;
+      background-position: center 140%;
     }
   }
 }

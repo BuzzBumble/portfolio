@@ -16,6 +16,7 @@
 
     display: grid;
 
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr [hero-row-start] 1fr 1fr;
   }
   #parallax-container {

@@ -5,11 +5,16 @@
     #banner {
       overflow: hidden;
 
+      #banner-title {
+        justify-items: end;
+        #hero-header {
+          font-size: 32px;
+        }
+      }
+
       #parallax-container {
         border-style: none;
       }
-    }
-    #hero-header {
     }
   }
 }
