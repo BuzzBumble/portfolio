@@ -1,5 +1,2 @@
-@use 'parallax-scene' as parallax;
-
-@mixin parallax-scene {
-    @include parallax.scene;
-}
+@use 'banner/banner';
+@include banner.mobile;

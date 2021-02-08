@@ -1,0 +1,15 @@
+@use '../media';
+
+@mixin mobile {
+  @include media.for-mobile {
+    #banner {
+      overflow: hidden;
+
+      #parallax-container {
+        border-style: none;
+      }
+    }
+    #hero-header {
+    }
+  }
+}
