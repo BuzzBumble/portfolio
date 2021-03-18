@@ -5,8 +5,11 @@ let fs = require('fs');
 const app = express();
 const axios = require('axios');
 const favicon = require('serve-favicon');
+const queries = require('./queries');
 
 if (app.get('env') == 'development') {
+  require('dotenv').config();
+
   let livereload = require('easy-livereload');
   var file_type_map = {
     ejs: 'html',
@@ -30,6 +33,9 @@ if (app.get('env') == 'development') {
     port : process.env.LIVERELOAD_PORT || 35729,
   }));
 }
+
+const pool = require('./db');
+
 app.use(morgan('dev'));
 
 const mediumURL = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@s.kang919'
@@ -109,6 +115,24 @@ app.get(['/COMP4537/labs/4/readFile', '/COMP4537/labs/4/readFile/*?'],
     res.status(200).send(text);
   }
 );
+
+app.get('/COMP4537/quizapi/questions', (req, res) => {
+  pool.query(queries.getQuestions, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.json(data.rows);
+  });
+  // Respond with all questions
+});
+
+app.post('/COMP4537/quizapi/questions', (req, res) => {
+  // Add a question
+});
+
+app.put('/COMP4537/quizapi/questions/:id', (req, res) => {
+  // Update a question
+});
 
 
 app.listen(process.env.PORT || 8000, (err) => {
