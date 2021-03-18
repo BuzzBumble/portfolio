@@ -7,7 +7,6 @@ const axios = require('axios');
 const favicon = require('serve-favicon');
 
 if (app.get('env') == 'development') {
-  console.log("asdf");
   let livereload = require('easy-livereload');
   var file_type_map = {
     ejs: 'html',
@@ -40,7 +39,7 @@ const themes = {
   pixel: 'pixel',
 };
 
-const default_theme = 'pixel';
+const default_theme = 'simple-dark';
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
