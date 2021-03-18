@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "npx sass public/styles/themes/pixel/:public/styles/css/ && node app.js",
+    "start": "node app.js",
     "dev": "node-dev app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sass": "npx sass --watch public/styles/themes/pixel/:public/styles/css/"
