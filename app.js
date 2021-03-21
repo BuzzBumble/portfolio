@@ -1,7 +1,9 @@
 var path = require('path');
 let morgan = require('morgan');
 var express = require('express');
+const bodyParser = require('body-parser');
 let fs = require('fs');
+let cors = require('cors');
 const app = express();
 const axios = require('axios');
 const favicon = require('serve-favicon');
@@ -36,6 +38,8 @@ if (app.get('env') == 'development') {
 
 const pool = require('./db');
 
+app.use(bodyParser.json());
+app.use(cors());
 app.use(morgan('dev'));
 
 const mediumURL = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@s.kang919'
@@ -121,19 +125,72 @@ app.get('/COMP4537/quizapi/questions', (req, res) => {
     if (err) {
       throw err;
     }
-    res.json(data.rows);
+
+    let choices = data.rows;
+    let questions = {};
+    choices.forEach((choice) => {
+      if (!(choice.question_id in questions)) {
+         questions[choice.question_id] = {
+          id: choice.question_id,
+          prompt: choice.prompt,
+          choices: []
+        };
+      }
+
+      let c = {
+        number: choice.number,
+        text: choice.text,
+        correct: choice.correct
+      }
+
+      questions[choice.question_id].choices.push(c);
+    });
+
+    res.json(questions);
   });
   // Respond with all questions
 });
 
 app.post('/COMP4537/quizapi/questions', (req, res) => {
-  // Add a question
+  let question = req.body;
+  let choiceCount = Object.keys(question.choices).length;
+
+  pool.connect((err, client, done) => {
+    client.query('BEGIN', (err) => {
+      const queryText = 'INSERT INTO questions(prompt) VALUES($1) RETURNING question_id';
+      client.query(queryText, [question.prompt], (err, res) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(res);
+        for (let i = 0; i < choiceCount; i++) {
+          const choice = question.choices[i+1];
+          const insertChoiceText = 'INSERT INTO choices(question_id, number, correct, text) ' +
+            'VALUES ($1, $2, $3, $4)';
+          client.query(insertChoiceText,
+            [res.rows[0].question_id, choice.number, choice.correct, choice.text], (err, res) => {
+              if (err) {
+                console.log(err);
+              }
+            });
+        }
+
+        client.query('COMMIT', (err) => {
+          if (err) {
+            console.log(err);
+          }
+          done();
+        });
+      });
+    });
+  });
+
+  res.send(JSON.stringify({a: "hello"}));
 });
 
 app.put('/COMP4537/quizapi/questions/:id', (req, res) => {
   // Update a question
 });
-
 
 app.listen(process.env.PORT || 8000, (err) => {
   if (err) {
