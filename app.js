@@ -138,6 +138,7 @@ app.get('/COMP4537/quizapi/questions', (req, res) => {
       }
 
       let c = {
+        id: choice.choice_id,
         number: choice.number,
         text: choice.text,
         correct: choice.correct
@@ -189,7 +190,39 @@ app.post('/COMP4537/quizapi/questions', (req, res) => {
 });
 
 app.put('/COMP4537/quizapi/questions/:id', (req, res) => {
-  // Update a question
+  let question = req.body;
+  let choiceCount = Object.keys(question.choices).length;
+  pool.connect((err, client, done) => {
+    client.query('BEGIN', (err) => {
+      const queryText = 'UPDATE questions SET prompt=$1 WHERE question_id=$2;';
+      client.query(queryText, [question.prompt, question.id], (err, res) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(res);
+        for (let i = 0; i < choiceCount; i++) {
+          const choice = question.choices[i+1];
+          const insertChoiceText = 'UPDATE choices SET correct=$1, text=$2' +
+            'WHERE question_id=$3 AND number=$4;';
+          client.query(insertChoiceText,
+            [choice.correct, choice.text, question.id, choice.number], (err, res) => {
+              if (err) {
+                console.log(err);
+              }
+          });
+        }
+
+        client.query('COMMIT', (err) => {
+          if (err) {
+            console.log(err);
+          }
+          done();
+        });
+      });
+    });
+  });
+
+  res.send(JSON.stringify({a: "hello"}));
 });
 
 app.listen(process.env.PORT || 8000, (err) => {
